@@ -19,6 +19,8 @@ class MainActivity : AppCompatActivity() {
     private var cardNumber: Int = 0
     private var scoreCount: Int = 0
     private var isCollisionEnabled = true
+    private var isCollision2Enabled = true
+    private var isCollision3Enabled = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,12 +50,14 @@ class MainActivity : AppCompatActivity() {
                 setNumberCard()
             }
         }
-        timer.scheduleAtFixedRate(task, 0, 3000)
+        timer.scheduleAtFixedRate(task, 0, 4000)
 
         val task2 = timerTask {
             runOnUiThread {
                 dropNumberCard()
                 checkCollision()
+                checkCollision2()
+                checkCollision3()
             }
         }
         timer.scheduleAtFixedRate(task2, 0, 16)
@@ -86,6 +90,58 @@ class MainActivity : AppCompatActivity() {
             val clampedX = newX.coerceIn(minLimit, maxLimit.toFloat())
             image1.translationX = clampedX // ImageViewのX座標を更新
         }
+
+        button3.setOnClickListener {
+            val currentX = image2.translationX // 現在のX座標
+            val newX = currentX + moveLeft // 移動後のX座標
+            image2.translationX = newX // ImageViewのX座標を更新
+
+            val minLimit = 0f // 画面の左端の制限
+            val maxLimit = binding.root.width - image2.width // 画面の右端の制限
+
+            // 移動後のX座標を制限範囲内に修正
+            val clampedX = newX.coerceIn(minLimit, maxLimit.toFloat())
+            image2.translationX = clampedX // ImageViewのX座標を更新
+        }
+
+        button4.setOnClickListener {
+            val currentX = image2.translationX // 現在のX座標
+            val newX = currentX + moveRight // 移動後のX座標
+            image2.translationX = newX // ImageViewのX座標を更新
+
+            val minLimit = 0f // 画面の左端の制限
+            val maxLimit = binding.root.width - image2.width // 画面の右端の制限
+
+            // 移動後のX座標を制限範囲内に修正
+            val clampedX = newX.coerceIn(minLimit, maxLimit.toFloat())
+            image2.translationX = clampedX // ImageViewのX座標を更新
+        }
+
+        button5.setOnClickListener {
+            val currentX = image3.translationX // 現在のX座標
+            val newX = currentX + moveLeft // 移動後のX座標
+            image3.translationX = newX // ImageViewのX座標を更新
+
+            val minLimit = 0f // 画面の左端の制限
+            val maxLimit = binding.root.width - image3.width // 画面の右端の制限
+
+            // 移動後のX座標を制限範囲内に修正
+            val clampedX = newX.coerceIn(minLimit, maxLimit.toFloat())
+            image3.translationX = clampedX // ImageViewのX座標を更新
+        }
+
+        button6.setOnClickListener {
+            val currentX = image3.translationX // 現在のX座標
+            val newX = currentX + moveRight // 移動後のX座標
+            image3.translationX = newX // ImageViewのX座標を更新
+
+            val minLimit = 0f // 画面の左端の制限
+            val maxLimit = binding.root.width - image3.width // 画面の右端の制限
+
+            // 移動後のX座標を制限範囲内に修正
+            val clampedX = newX.coerceIn(minLimit, maxLimit.toFloat())
+            image3.translationX = clampedX // ImageViewのX座標を更新
+        }
     }
 
     private fun setNumberCard() {
@@ -100,12 +156,14 @@ class MainActivity : AppCompatActivity() {
         cardNumber = number
         numberCard.y = 0f
         isCollisionEnabled = true
+        isCollision2Enabled = true
+        isCollision3Enabled = true
         numberCard.visibility = View.VISIBLE
     }
 
     private fun dropNumberCard() {
         val numberCard = binding.numberCard
-        numberCard.y += 16f
+        numberCard.y += 8f
     }
 
     val collisionThreshold: Int = 30 // 衝突判定のしきい値（ピクセル）
@@ -116,25 +174,71 @@ class MainActivity : AppCompatActivity() {
         val scoreBoard = binding.scoreBoard
         val numberCardRect = Rect()
         numberCard.getGlobalVisibleRect(numberCardRect) // squareViewの位置とサイズを取得
-
         val image1Rect = Rect()
         image1.getGlobalVisibleRect(image1Rect) // image1の位置とサイズを取得
-
         // 衝突判定
         if (Rect.intersects(numberCardRect, image1Rect)) {
             // 衝突した場合の処理をここに記述します
             if (isCollisionEnabled) {
                 if (cardNumber % 2 == 0) {
                     scoreCount += 2
-
-                    Log.d("Collision", "ピンポーン☺️")
                 } else {
                     scoreCount += -1
-                    Log.d("Collision", "ブー")
                 }
             }
             scoreBoard.text = scoreCount.toString()
             isCollisionEnabled = false
+            isCollision2Enabled = false
+            isCollision3Enabled = false
+            numberCard.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun checkCollision2() {
+        val numberCard = binding.numberCard
+        val image2 = binding.image2
+        val scoreBoard = binding.scoreBoard
+        val numberCardRect = Rect()
+        numberCard.getGlobalVisibleRect(numberCardRect) // squareViewの位置とサイズを取得
+        val image2Rect = Rect()
+        image2.getGlobalVisibleRect(image2Rect) // image1の位置とサイズを取得
+        // 衝突判定
+        if (Rect.intersects(numberCardRect, image2Rect)) {
+            // 衝突した場合の処理をここに記述します
+            if (isCollision2Enabled) {
+                if (cardNumber % 3 == 0) {
+                    scoreCount += 3
+                } else {
+                    scoreCount += -1
+                }
+            }
+            scoreBoard.text = scoreCount.toString()
+            isCollision2Enabled = false
+            isCollision3Enabled = false
+            numberCard.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun checkCollision3() {
+        val numberCard = binding.numberCard
+        val image3 = binding.image3
+        val scoreBoard = binding.scoreBoard
+        val numberCardRect = Rect()
+        numberCard.getGlobalVisibleRect(numberCardRect) // squareViewの位置とサイズを取得
+        val image3Rect = Rect()
+        image3.getGlobalVisibleRect(image3Rect) // image1の位置とサイズを取得
+        // 衝突判定
+        if (Rect.intersects(numberCardRect, image3Rect)) {
+            // 衝突した場合の処理をここに記述します
+            if (isCollision3Enabled) {
+                if (cardNumber % 5 == 0) {
+                    scoreCount += 2
+                } else {
+                    scoreCount += -1
+                }
+            }
+            scoreBoard.text = scoreCount.toString()
+            isCollision3Enabled = false
             numberCard.visibility = View.INVISIBLE
         }
     }
