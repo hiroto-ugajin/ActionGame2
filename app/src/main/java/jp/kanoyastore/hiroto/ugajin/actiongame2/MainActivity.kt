@@ -1,9 +1,12 @@
 package jp.kanoyastore.hiroto.ugajin.actiongame2
 
+import android.graphics.Rect
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import jp.kanoyastore.hiroto.ugajin.actiongame2.databinding.ActivityMainBinding
 import java.util.*
 import kotlin.concurrent.timerTask
@@ -12,6 +15,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private var numberCardY: Float = 0f
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,9 +47,39 @@ class MainActivity : AppCompatActivity() {
         val task2 = timerTask {
             runOnUiThread {
                 dropNumberCard()
+                checkCollision()
             }
         }
         timer.scheduleAtFixedRate(task2, 0, 16)
+
+        val moveRight = 100
+        val moveLeft = -100// 移動距離（ピクセル単位）
+
+        button1.setOnClickListener {
+            val currentX = image1.translationX // 現在のX座標
+            val newX = currentX + moveLeft // 移動後のX座標
+            image1.translationX = newX // ImageViewのX座標を更新
+
+            val minLimit = 0f // 画面の左端の制限
+            val maxLimit = binding.root.width - image1.width // 画面の右端の制限
+
+            // 移動後のX座標を制限範囲内に修正
+            val clampedX = newX.coerceIn(minLimit, maxLimit.toFloat())
+            image1.translationX = clampedX // ImageViewのX座標を更新
+        }
+
+        button2.setOnClickListener {
+            val currentX = image1.translationX // 現在のX座標
+            val newX = currentX + moveRight // 移動後のX座標
+            image1.translationX = newX // ImageViewのX座標を更新
+
+            val minLimit = 0f // 画面の左端の制限
+            val maxLimit = binding.root.width - image1.width // 画面の右端の制限
+
+            // 移動後のX座標を制限範囲内に修正
+            val clampedX = newX.coerceIn(minLimit, maxLimit.toFloat())
+            image1.translationX = clampedX // ImageViewのX座標を更新
+        }
     }
 
     private fun setNumberCard() {
@@ -63,5 +97,24 @@ class MainActivity : AppCompatActivity() {
     private fun dropNumberCard() {
         val numberCard = binding.numberCard
         numberCard.y += 16f
+    }
+
+    val collisionThreshold: Int = 30 // 衝突判定のしきい値（ピクセル）
+
+    private fun checkCollision() {
+        val numberCard = binding.numberCard
+        val image1 = binding.image1
+        val numberCardRect = Rect()
+        numberCard.getGlobalVisibleRect(numberCardRect) // squareViewの位置とサイズを取得
+
+        val image1Rect = Rect()
+        image1.getGlobalVisibleRect(image1Rect) // image1の位置とサイズを取得
+
+        // 衝突判定
+        if (Rect.intersects(numberCardRect, image1Rect)) {
+            // 衝突した場合の処理をここに記述します
+            // 例えば、ログの出力や別のアクションの実行など
+            Log.d("Collision", "衝突しました☺️")
+        }
     }
 }
