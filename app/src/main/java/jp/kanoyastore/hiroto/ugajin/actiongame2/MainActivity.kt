@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.View
 import jp.kanoyastore.hiroto.ugajin.actiongame2.databinding.ActivityMainBinding
 import java.util.*
 import kotlin.concurrent.timerTask
@@ -15,7 +16,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private var numberCardY: Float = 0f
-
+    private var cardNumber: Int = 0
+    private var scoreCount: Int = 0
+    private var isCollisionEnabled = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +28,7 @@ class MainActivity : AppCompatActivity() {
 
         val frameLayout = binding.frameLayout
         val numberCard = binding.numberCard
+        val scoreBoard = binding.scoreBoard
         val image1 = binding.image1
         val image2 = binding.image2
         val image3 = binding.image3
@@ -34,6 +38,8 @@ class MainActivity : AppCompatActivity() {
         val button4 = binding.button4
         val button5 = binding.button5
         val button6 = binding.button6
+
+        scoreBoard.text = scoreCount.toString()
 
         val timer = Timer()
 
@@ -91,7 +97,10 @@ class MainActivity : AppCompatActivity() {
         numberCard.x = startX.toFloat()
         val number = random.nextInt(100)
         numberCard.text = number.toString()
+        cardNumber = number
         numberCard.y = 0f
+        isCollisionEnabled = true
+        numberCard.visibility = View.VISIBLE
     }
 
     private fun dropNumberCard() {
@@ -104,6 +113,7 @@ class MainActivity : AppCompatActivity() {
     private fun checkCollision() {
         val numberCard = binding.numberCard
         val image1 = binding.image1
+        val scoreBoard = binding.scoreBoard
         val numberCardRect = Rect()
         numberCard.getGlobalVisibleRect(numberCardRect) // squareViewの位置とサイズを取得
 
@@ -113,8 +123,19 @@ class MainActivity : AppCompatActivity() {
         // 衝突判定
         if (Rect.intersects(numberCardRect, image1Rect)) {
             // 衝突した場合の処理をここに記述します
-            // 例えば、ログの出力や別のアクションの実行など
-            Log.d("Collision", "衝突しました☺️")
+            if (isCollisionEnabled) {
+                if (cardNumber % 2 == 0) {
+                    scoreCount += 2
+
+                    Log.d("Collision", "ピンポーン☺️")
+                } else {
+                    scoreCount += -1
+                    Log.d("Collision", "ブー")
+                }
+            }
+            scoreBoard.text = scoreCount.toString()
+            isCollisionEnabled = false
+            numberCard.visibility = View.INVISIBLE
         }
     }
 }
