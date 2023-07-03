@@ -13,19 +13,45 @@
         android:layout_height="match_parent"
         android:layout_weight="4"
         android:orientation="horizontal">
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="30dp"
+            />
+
         <TextView
             android:id="@+id/scoreBoard"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="30dp"
             android:textSize="16sp"
             android:background="#fffaf0"
             android:textColor="@android:color/black"
+            android:layout_weight="1"
             android:gravity="center"
             />
 
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="30dp"
+            />
+
+        <TextView
+            android:id="@+id/maximumScoreBoard"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textSize="16sp"
+            android:background="#fffaf0"
+            android:textColor="@android:color/black"
+            android:layout_weight="1"
+            android:gravity="center"
+            />
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="30dp"
+            />
 
     </LinearLayout>
-
 
     <FrameLayout
         android:id="@+id/frameLayout"
@@ -49,31 +75,37 @@
             android:layout_gravity="bottom"
             android:orientation="vertical">
 
-            <ImageView
+            <TextView
                 android:id="@+id/image1"
                 android:layout_width="100dp"
                 android:layout_height="30dp"
                 android:background="#ffa500"
+                android:gravity="center"
+                android:textColor="@android:color/black"
+                android:text="２✖️"
                 />
 
-            <ImageView
+            <TextView
                 android:id="@+id/image2"
                 android:layout_width="100dp"
                 android:layout_height="30dp"
                 android:background="#7fff00"
+                android:gravity="center"
+                android:textColor="@android:color/black"
+                android:text="３✖️"
                 />
 
-            <ImageView
+            <TextView
                 android:id="@+id/image3"
                 android:layout_width="100dp"
                 android:layout_height="30dp"
                 android:background="#8a2be2"
-
+                android:gravity="center"
+                android:textColor="@android:color/black"
+                android:text="５✖️"
                 android:layout_gravity="bottom"
                 />
         </LinearLayout>
-
-
 
     </FrameLayout>
 
@@ -88,14 +120,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Button1" />
+            android:text="◀︎２✖️"
+            />
 
         <Button
             android:id="@+id/button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Button2" />
+            android:text="２✖️▶︎"
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -109,14 +143,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Button3" />
+            android:text="◀︎３✖️" />
 
         <Button
             android:id="@+id/button4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Button4" />
+            android:text="３✖️▶︎" />
     </LinearLayout>
 
     <LinearLayout
@@ -130,14 +164,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Button5" />
+            android:text="◀︎５✖️" />
 
         <Button
             android:id="@+id/button6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Button6" />
+            android:text="５✖️▶︎" />
     </LinearLayout>
 
 </LinearLayout>

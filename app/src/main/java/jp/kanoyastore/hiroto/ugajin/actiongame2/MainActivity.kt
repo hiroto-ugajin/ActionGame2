@@ -18,6 +18,8 @@ class MainActivity : AppCompatActivity() {
     private var numberCardY: Float = 0f
     private var cardNumber: Int = 0
     private var scoreCount: Int = 0
+    private var maximumScore: Int = 0
+    private var prospectiveScore: Int = 0
     private var isCollisionEnabled = true
     private var isCollision2Enabled = true
     private var isCollision3Enabled = true
@@ -31,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         val frameLayout = binding.frameLayout
         val numberCard = binding.numberCard
         val scoreBoard = binding.scoreBoard
+        val maximumScoreBoard = binding.maximumScoreBoard
         val image1 = binding.image1
         val image2 = binding.image2
         val image3 = binding.image3
@@ -48,9 +51,10 @@ class MainActivity : AppCompatActivity() {
         val task = timerTask {
             runOnUiThread {
                 setNumberCard()
+                calcMaximumScore()
             }
         }
-        timer.scheduleAtFixedRate(task, 0, 4000)
+        timer.scheduleAtFixedRate(task, 0, 5000)
 
         val task2 = timerTask {
             runOnUiThread {
@@ -146,6 +150,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setNumberCard() {
         val numberCard = binding.numberCard
+        val maximumScoreBoard = binding.maximumScoreBoard
         val random = Random()
         val screenWidth = resources.displayMetrics.widthPixels
         val screenHeight = resources.displayMetrics.heightPixels
@@ -155,6 +160,9 @@ class MainActivity : AppCompatActivity() {
         numberCard.text = number.toString()
         cardNumber = number
         numberCard.y = 0f
+
+
+
         isCollisionEnabled = true
         isCollision2Enabled = true
         isCollision3Enabled = true
@@ -163,7 +171,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun dropNumberCard() {
         val numberCard = binding.numberCard
-        numberCard.y += 8f
+        numberCard.y += 5f
     }
 
     val collisionThreshold: Int = 30 // 衝突判定のしきい値（ピクセル）
@@ -241,5 +249,14 @@ class MainActivity : AppCompatActivity() {
             isCollision3Enabled = false
             numberCard.visibility = View.INVISIBLE
         }
+    }
+
+    private fun calcMaximumScore() {
+        val maximumScoreBoard = binding.maximumScoreBoard
+        if (cardNumber%3 == 0) { prospectiveScore = 3 }
+        else if (cardNumber%2 == 0 || cardNumber%5 == 5) { prospectiveScore = 2}
+        else prospectiveScore = 0
+        maximumScore = maximumScore + prospectiveScore
+        maximumScoreBoard.text = "最大スコア　" + "${maximumScore.toString()}"
     }
 }
