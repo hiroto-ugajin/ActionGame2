@@ -46,12 +46,22 @@ class MainActivity : AppCompatActivity() {
 
         scoreBoard.text = scoreCount.toString()
 
+        val maxCardCount = 6
+        var cardCount = 0
+
         val timer = Timer()
 
         val task = timerTask {
             runOnUiThread {
-                setNumberCard()
-                calcMaximumScore()
+                if (cardCount < maxCardCount) {
+                    setNumberCard()
+                    calcMaximumScore()
+                    cardCount++
+                } else {
+                    // ゲーム終了の処理を行う
+                    gameEnd()
+                    timer.cancel()  // タイマーを停止する
+                }
             }
         }
         timer.scheduleAtFixedRate(task, 0, 5000)
@@ -146,6 +156,24 @@ class MainActivity : AppCompatActivity() {
             val clampedX = newX.coerceIn(minLimit, maxLimit.toFloat())
             image3.translationX = clampedX // ImageViewのX座標を更新
         }
+    }
+
+    private fun gameEnd() {
+        // 総括メッセージを表示する処理
+        val rate = scoreCount/maximumScore
+        if (rate == 1) {
+            binding.gameSummaryTextView.text = "ゲーム終了！COMPLETE"
+        }
+        else if (0.5 <= rate) {
+            binding.gameSummaryTextView.text = "ゲーム終了！GREAT"
+        }
+        else if (0.0 <= rate) {
+            binding.gameSummaryTextView.text = "ゲーム終了！NICE"
+        }
+        else if ( rate < 0.0){
+            binding.gameSummaryTextView.text = "ゲーム終了！NEVER MIND!"
+        }
+        binding.gameSummaryTextView.visibility = View.VISIBLE
     }
 
     private fun setNumberCard() {
