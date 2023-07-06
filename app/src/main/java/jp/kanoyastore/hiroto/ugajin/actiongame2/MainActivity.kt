@@ -15,9 +15,10 @@ import kotlin.concurrent.timerTask
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private var numberCardY: Float = 0f
+    private var numberCardY: Int = 0
     private var cardNumber: Int = 0
     private var scoreCount: Int = 0
+
     private var maximumScore: Int = 0
     private var prospectiveScore: Int = 0
     private var isCollisionEnabled = true
@@ -160,14 +161,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun gameEnd() {
         // 総括メッセージを表示する処理
-        val rate = scoreCount/maximumScore
-        if (rate == 1) {
+        val a = scoreCount.toFloat()
+        val b = maximumScore.toFloat()
+
+        val rate = a/b
+
+        if (rate >= 1.0) {
             binding.gameSummaryTextView.text = "ゲーム終了！COMPLETE"
         }
-        else if (0.5 <= rate) {
+        else if (0.5 <= rate && rate < 1.0) {
             binding.gameSummaryTextView.text = "ゲーム終了！GREAT"
         }
-        else if (0.0 <= rate) {
+        else if (0.0 <= rate && rate < 0.5) {
             binding.gameSummaryTextView.text = "ゲーム終了！NICE"
         }
         else if ( rate < 0.0){
