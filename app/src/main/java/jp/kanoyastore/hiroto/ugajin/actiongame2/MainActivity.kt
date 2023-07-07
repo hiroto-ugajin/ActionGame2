@@ -160,12 +160,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun gameEnd() {
-        // 総括メッセージを表示する処理
         val a = scoreCount.toFloat()
         val b = maximumScore.toFloat()
-
         val rate = a/b
-
         if (rate >= 1.0) {
             binding.gameSummaryTextView.text = "ゲーム終了！COMPLETE"
         }
