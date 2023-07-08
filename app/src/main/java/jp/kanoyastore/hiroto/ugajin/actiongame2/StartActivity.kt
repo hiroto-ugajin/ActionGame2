@@ -15,12 +15,12 @@ class StartActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        binding.image.setImageResource(R.drawable.start200)
+
         binding.start.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+
         }
-
-
-
     }
 }

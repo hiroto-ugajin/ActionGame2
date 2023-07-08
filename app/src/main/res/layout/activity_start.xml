@@ -3,14 +3,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffd1"
     tools:context=".StartActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/start"
+
+
+
+
+    <ImageView
+        android:id="@+id/image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
 
+         />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/image"
+            android:text="上方から、ナンバーカードが落ちてきます。２、３または５の倍数用のプレートでキャッチして下さい。正しいプレートでキャッチすると、それぞれ、２点、３点、２点が加算されます。間違うと−1点です。２０問で１セットです。最後に、得点の合計と最大得点の比率が計算されてサマリーメッセージが表示されます。"
+            android:textSize="18sp"
+            android:textColor="#000000"
+            android:gravity="start" />
+
+        <Button
+            android:id="@+id/start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:text="Start" />
+
+    </LinearLayout>
 
 </RelativeLayout>

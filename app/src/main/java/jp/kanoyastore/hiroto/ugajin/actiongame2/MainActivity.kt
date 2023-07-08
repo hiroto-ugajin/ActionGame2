@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.View
 import jp.kanoyastore.hiroto.ugajin.actiongame2.databinding.ActivityMainBinding
 import java.util.*
+
 import kotlin.concurrent.timerTask
 
 class MainActivity : AppCompatActivity() {
@@ -47,7 +48,7 @@ class MainActivity : AppCompatActivity() {
 
         scoreBoard.text = scoreCount.toString()
 
-        val maxCardCount = 6
+        val maxCardCount = 21
         var cardCount = 0
 
         val timer = Timer()
@@ -166,13 +167,13 @@ class MainActivity : AppCompatActivity() {
         if (rate >= 1.0) {
             binding.gameSummaryTextView.text = "ゲーム終了！COMPLETE"
         }
-        else if (0.5 <= rate && rate < 1.0) {
+        else if (0.6 <= rate && rate < 1.0) {
             binding.gameSummaryTextView.text = "ゲーム終了！GREAT"
         }
-        else if (0.0 <= rate && rate < 0.5) {
+        else if (0.2 <= rate && rate < 0.6) {
             binding.gameSummaryTextView.text = "ゲーム終了！NICE"
         }
-        else if ( rate < 0.0){
+        else if ( rate < 0.2){
             binding.gameSummaryTextView.text = "ゲーム終了！NEVER MIND!"
         }
         binding.gameSummaryTextView.visibility = View.VISIBLE
@@ -251,6 +252,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             scoreBoard.text = scoreCount.toString()
+            isCollisionEnabled = false
             isCollision2Enabled = false
             isCollision3Enabled = false
             numberCard.visibility = View.INVISIBLE
@@ -276,6 +278,8 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             scoreBoard.text = scoreCount.toString()
+            isCollisionEnabled = false
+            isCollision2Enabled = false
             isCollision3Enabled = false
             numberCard.visibility = View.INVISIBLE
         }
@@ -284,7 +288,7 @@ class MainActivity : AppCompatActivity() {
     private fun calcMaximumScore() {
         val maximumScoreBoard = binding.maximumScoreBoard
         if (cardNumber%3 == 0) { prospectiveScore = 3 }
-        else if (cardNumber%2 == 0 || cardNumber%5 == 5) { prospectiveScore = 2}
+        else if (cardNumber%2 == 0 || cardNumber%5 == 0) { prospectiveScore = 2}
         else prospectiveScore = 0
         maximumScore = maximumScore + prospectiveScore
         maximumScoreBoard.text = "最大スコア　" + "${maximumScore.toString()}"

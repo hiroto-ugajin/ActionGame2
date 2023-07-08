@@ -57,7 +57,7 @@
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_weight="1.2">
 
         <TextView
             android:id="@+id/numberCard"
@@ -89,7 +89,7 @@
                 android:id="@+id/image2"
                 android:layout_width="100dp"
                 android:layout_height="30dp"
-                android:background="#7fff00"
+                android:background="#ffff00"
                 android:gravity="center"
                 android:textColor="@android:color/black"
                 android:text="３✖️"
@@ -99,7 +99,7 @@
                 android:id="@+id/image3"
                 android:layout_width="100dp"
                 android:layout_height="30dp"
-                android:background="#8a2be2"
+                android:background="#00ff00"
                 android:gravity="center"
                 android:textColor="@android:color/black"
                 android:text="５✖️"
